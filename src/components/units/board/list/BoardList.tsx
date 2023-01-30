@@ -1,64 +1,159 @@
-import BoardListUI from "./BoardList.presenter";
-import {
-  FETCH_BOARDS,
-  FETCH_BOARDS_COUNT,
-  FETCH_BOARDS_OF_THE_BEST,
-} from "./BoardList.queries";
-import { useQuery } from "@apollo/client";
+import * as S from "./BoardList.styles";
 import { useRouter } from "next/router";
-import { MouseEvent, useState } from "react";
-import {
-  IQuery,
-  IQueryFetchBoardsArgs,
-  IQueryFetchBoardsCountArgs,
-} from "../../../../commons/types/generated/types";
+import { MouseEvent, useEffect, useState } from "react";
+import { getDate } from "../../../../commons/libraries/utils";
+import InfiniteScroll from "react-infinite-scroller";
+import Link from "next/link";
+import { UseQueryfetchBoards } from "../../../commons/hooks/useQueries/UseQueryFetchBoards";
+import { UseQueryfetchBoardsOfTheBest } from "../../../commons/hooks/useQueries/UseQueryFetchBoardsOfTheBest";
 
 export default function BoardList() {
-  const [keyword, setKeyword] = useState("");
   const router = useRouter();
+  const [showButton, setShowButton] = useState(false);
 
-  const { data, refetch } = useQuery<
-    Pick<IQuery, "fetchBoards">,
-    IQueryFetchBoardsArgs
-  >(FETCH_BOARDS);
+  const { data, fetchMore } = UseQueryfetchBoards();
+  const { data: dataBoardsBest } = UseQueryfetchBoardsOfTheBest();
 
-  const onChangeKeyword = (value: string) => {
-    setKeyword(value);
+  const bestData = dataBoardsBest?.fetchBoardsOfTheBest.filter((el, index) => {
+    if (index <= 2) {
+      return el;
+    } else {
+      return undefined;
+    }
+  });
+
+  const scrollToTop = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
-  const { data: dataBoardsCount, refetch: refetchBoardsCount } = useQuery<
-    Pick<IQuery, "fetchBoardsCount">,
-    IQueryFetchBoardsCountArgs
-  >(FETCH_BOARDS_COUNT);
+  useEffect(() => {
+    const handleShowButton = () => {
+      if (window.scrollY > 500) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
 
-  const { data: dataBoardsBest } = useQuery<
-    Pick<IQuery, "fetchBoardsOfTheBest">
-  >(FETCH_BOARDS_OF_THE_BEST);
+    window.addEventListener("scroll", handleShowButton);
+    return () => {
+      window.removeEventListener("scroll", handleShowButton);
+    };
+  }, []);
 
-  const onClickMoveToBoardNew = () => {
-    void router.push("/boards/new");
-  };
-  const onClickMoveToBoardDetail = (event: MouseEvent<HTMLDivElement>) => {
-    void router.push(`/boards/${event.currentTarget.id}`);
+  const onLoadMore = () => {
+    if (data === undefined) return;
+
+    void fetchMore({
+      variables: { page: Math.ceil(data.fetchBoards.length / 10) + 1 },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (fetchMoreResult.fetchBoards === undefined) {
+          return {
+            fetchBoards: [...prev.fetchBoards],
+          };
+        }
+
+        return {
+          fetchBoards: [...prev.fetchBoards, ...fetchMoreResult.fetchBoards],
+        };
+      },
+    });
   };
 
   const onClickMoveToBest = (event: MouseEvent<HTMLDivElement>) => {
     void router.push(`/boards/${event.currentTarget.id}`);
   };
 
+  const onErrorImg = (event: any) => {
+    event.target.src = "/BestOnErrorImg.jpg";
+  };
+
+  const onErrorBoardImg = (event: any) => {
+    event.target.src = "/boardOnErrorImg.jpg";
+  };
+
+  const onErrorUserImg = (event: any) => {
+    event.target.src = "/profile.png";
+  };
+
   return (
-    <BoardListUI
-      data={data}
-      onClickMoveToBoardNew={onClickMoveToBoardNew}
-      onClickMoveToBoardDetail={onClickMoveToBoardDetail}
-      onClickMoveToBest={onClickMoveToBest}
-      refetch={refetch}
-      count={dataBoardsCount?.fetchBoardsCount}
-      best={dataBoardsBest?.fetchBoardsOfTheBest}
-      keyword={keyword}
-      refetchBoardsCount={refetchBoardsCount}
-      onChangeKeyword={onChangeKeyword}
-      // onClickSearch={onClickSearch}
-    />
+    <S.Wrapper>
+      <S.BestTitle>Best Posts</S.BestTitle>
+      <S.BestWrapper>
+        {bestData?.map((best: any) => (
+          <S.BestLiWrapper
+            key={best._id}
+            id={best._id}
+            onClick={onClickMoveToBest}
+          >
+            <S.BestImg
+              src={`https://storage.googleapis.com/${best.images}`}
+              onError={onErrorImg}
+            />
+            <S.BestContentsWrapper>
+              <S.BestContentsWriter>
+                <S.BestContentsLabel>Writer</S.BestContentsLabel>
+                {best.user?.name}
+              </S.BestContentsWriter>
+              <S.BestContentsTitle>
+                <S.BestContentsLabel>Title</S.BestContentsLabel>
+                {best.title.slice(0, 6)}
+              </S.BestContentsTitle>
+              <S.BestCount>
+                <S.BestContentsLabel>Like</S.BestContentsLabel>
+                {best.likeCount}
+              </S.BestCount>
+            </S.BestContentsWrapper>
+          </S.BestLiWrapper>
+        ))}
+      </S.BestWrapper>
+      <S.Title>Board</S.Title>
+      <S.ScrollWrapper>
+        <InfiniteScroll pageStart={0} loadMore={onLoadMore} hasMore={true}>
+          <>
+            <S.BoardWrapper>
+              {data?.fetchBoards.map((board, index) => (
+                <Link href={`boards/${board._id}`} key={index}>
+                  <S.BoardList>
+                    <S.BoardImg
+                      src={`https://storage.googleapis.com/${board.images}`}
+                      onError={onErrorBoardImg}
+                    />
+                    <S.ContentsWrapper>
+                      <S.TitleDateWrap>
+                        <S.BoardTitle>{board.title}</S.BoardTitle>
+                      </S.TitleDateWrap>
+                      <S.BoardContents>{board.contents}</S.BoardContents>
+                      <S.BottomWrapper>
+                        <S.UserWrapper>
+                          <S.UserImg src="" onError={onErrorUserImg} />
+                          <S.UserName>{board.user?.name}</S.UserName>
+                        </S.UserWrapper>
+                        <S.BoardDate>{getDate(board.createdAt)}</S.BoardDate>
+                      </S.BottomWrapper>
+                    </S.ContentsWrapper>
+                  </S.BoardList>
+                </Link>
+              ))}
+            </S.BoardWrapper>
+          </>
+        </InfiniteScroll>
+      </S.ScrollWrapper>
+      {showButton && (
+        <S.ScrollWrap>
+          <Link href="/boards/new">
+            <a>
+              <S.PostBtn>POST</S.PostBtn>
+            </a>
+          </Link>
+          <S.TopBtn onClick={scrollToTop} type="button">
+            TOP
+          </S.TopBtn>
+        </S.ScrollWrap>
+      )}
+    </S.Wrapper>
   );
 }

@@ -24,7 +24,7 @@ export const BestWrapper = styled.div`
 `;
 
 export const BestLiWrapper = styled.div`
-  width: 24%;
+  width: 28%;
   height: 400px;
   background: #f6f4f5;
   cursor: pointer;
@@ -32,12 +32,16 @@ export const BestLiWrapper = styled.div`
 
 export const BestImg = styled.img`
   width: 100%;
-  height: 300px;
+  aspect-ratio: 2/1.5;
 `;
 
 export const BestContentsWrapper = styled.div`
-  width: 200px;
-  padding: 10px 10px;
+  width: 100%;
+  height: 150px;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const BestContentsLabel = styled.div`
@@ -61,10 +65,6 @@ export const BestContentsTitle = styled.div`
   align-items: center;
 `;
 
-export const BestContentsDetail = styled.div``;
-
-export const BestContentsInfo = styled.div``;
-
 export const BestCount = styled.div`
   font-size: 18px;
   display: flex;
@@ -72,125 +72,158 @@ export const BestCount = styled.div`
   align-items: center;
 `;
 
-export const SearchWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 80px;
-`;
-
-export const DateSearchInput = styled.input`
-  width: 244px;
-  height: 52px;
-  border: 1px solid #bdbdbd;
-  padding: 14px 16px;
-  border-radius: 10px;
-`;
-
-export const SearchBtn = styled.button`
-  width: 94px;
-  height: 52px;
-  background: #f9d142;
-  border-radius: 50px;
-  font-weight: bold;
-  cursor: pointer;
-`;
-
-export const TableTitle = styled.h2`
+export const Title = styled.h2`
   font-size: 36px;
   font-weight: 700;
   color: white;
   margin: 80px 0 40px 0;
 `;
 
-export const Table = styled.div`
+export const ScrollWrapper = styled.div`
   width: 100%;
-`;
-
-export const TableTop = styled.div`
-  border-top: 1px solid #666666;
-`;
-
-export const TableBottom = styled.div`
-  border-bottom: 1px solid #666666;
-`;
-
-export const ColumnHeaderBasic = styled.div`
-  width: 10%;
-  text-align: center;
-  color: white;
-`;
-
-export const ColumnHeaderTitle = styled.div`
-  width: 70%;
-  text-align: center;
-  color: white;
-`;
-
-export const FirstRow = styled.div`
+  padding: 20px 0;
+  overflow-x: hidden;
+  overflow: auto;
   display: flex;
-  flex-direction: row;
-  height: 52px;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 52px;
-  border-bottom: 1px solid #bdbdbd;
-  color: #4f4f4f;
-`;
+  flex-direction: column;
+  align-items: center;
 
-export const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 52px;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 52px;
-  border-bottom: 1px solid #bdbdbd;
-  color: #4f4f4f;
-
-  :hover {
-    color: #666;
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
   }
 `;
 
-export const ColumnBasic = styled.div`
-  width: 10%;
-  text-align: center;
-  font-weight: 400;
-  color: white;
+export const BoardWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-export const ColumnTitle = styled.div`
-  width: 70%;
-  text-align: center;
+export const BoardList = styled.div`
+  width: 30%;
+  height: 500px;
+  margin-bottom: 30px;
   cursor: pointer;
-  font-weight: 400;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0px 0px 10px grey;
+  background-color: transparent;
 `;
 
-export const Footer = styled.div`
+export const BoardImg = styled.img`
+  width: 100%;
+  height: 280px;
+`;
+
+export const ContentsWrapper = styled.div`
+  width: 100%;
+  height: 220px;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const TitleDateWrap = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-top: 50px;
+  justify-content: space-between;
 `;
 
-export const BoardNewButton = styled.button`
-  width: 10%;
-  height: 52px;
-  border: 1px solid #f9d142;
-  border-radius: 50px;
-  color: #f9d142;
-  border: 1px solid #f9d142;
-  background: none;
+export const BoardTitle = styled.div`
   font-size: 24px;
   font-weight: bold;
-  cursor: pointer;
+  color: white;
+`;
 
+export const BoardDate = styled.p`
+  color: white;
+  margin-bottom: 0;
+`;
+
+export const BoardContents = styled.div`
+  font-size: 16px;
+  color: white;
+  word-break: break-all;
+`;
+
+export const BottomWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const UserWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+`;
+
+export const UserImg = styled.img`
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+`;
+
+export const UserName = styled.div`
+  color: white;
+`;
+
+export const ScrollWrap = styled.div`
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  cursor: pointer;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const TopBtn = styled.button`
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 600;
+  outline: none;
+  border: none;
+  cursor: pointer;
+`;
+
+export const PostBtn = styled.button`
+  width: 3.5rem;
+  height: 3.5rem;
+  border: none;
+  background: #f9d142;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
   :hover {
-    background: #f9d142;
-    color: black;
+    background-color: transparent;
+    border: 1px solid #f9d142;
+    color: #f9d142;
   }
 `;

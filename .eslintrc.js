@@ -16,5 +16,6 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": "off",
     "react/display-name": "off",
     "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
   },
 };
