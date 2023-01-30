@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   background-color: transparent;
 `;
 
-export const InnerWrapper = styled.div`
+export const Form = styled.form`
   width: 100%;
   margin: 40px 0;
   display: flex;
