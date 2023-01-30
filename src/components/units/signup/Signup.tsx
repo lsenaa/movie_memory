@@ -1,55 +1,43 @@
-import { useMutation } from "@apollo/client";
-import { Modal } from "antd";
-import { useRouter } from "next/router";
-import { IMutation } from "../../../commons/types/generated/types";
-import { CREATE_USER } from "./Signup.queries";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./Signup.validation";
 import * as S from "./Signup.styles";
+import { ChangeEvent } from "react";
+import { UseMutationCreateUser } from "../../commons/hooks/useMutations/UseMutationCreateUser";
+import Link from "next/link";
 
-interface IFormData {
+export interface IFormSignupData {
   name: string;
   password: string;
+  passwordConfirm: string;
   email: string;
+  checkbox: boolean;
 }
 
 export default function Signup() {
-  const router = useRouter();
+  const { createUserSubmit } = UseMutationCreateUser();
 
-  const [createUser] = useMutation<Pick<IMutation, "createUser">>(CREATE_USER);
+  const { register, handleSubmit, formState, setValue } =
+    useForm<IFormSignupData>({
+      resolver: yupResolver(schema),
+      mode: "onChange",
+    });
 
-  const { register, handleSubmit, formState, getValues } = useForm<IFormData>({
-    resolver: yupResolver(schema),
-    mode: "onChange",
-  });
-
-  const onClickSignup = async (data: IFormData) => {
-    try {
-      await createUser({
-        variables: {
-          createUserInput: {
-            name: data.name,
-            password: data.password,
-            email: data.email,
-          },
-        },
-      });
-      Modal.confirm({ content: "회원가입이 완료되었습니다. 로그인 해주세요." });
-      void router.push("/signin");
-    } catch (error) {
-      if (error instanceof Error) Modal.error({ content: error.message });
-    }
+  const onSubmitForm = (data: IFormSignupData) => {
+    void createUserSubmit(data);
   };
-  const onClickMoveToSignin = () => {
-    void router.push("/signin");
+
+  const onChangeChecked = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue("checkbox", e.target.checked);
   };
 
   return (
     <S.Wrapper>
-      <S.InnerWrapper onSubmit={handleSubmit(onClickSignup)}>
+      <S.Form onSubmit={handleSubmit(onSubmitForm)}>
         <S.TitleWrapper>
-          <S.SignIn onClick={onClickMoveToSignin}>Sign In</S.SignIn>
+          <Link href="/signin">
+            <S.SignIn>Sign In</S.SignIn>
+          </Link>
           <S.SignUp>Sign Up</S.SignUp>
         </S.TitleWrapper>
         <S.InputWrapper>
@@ -79,11 +67,16 @@ export default function Signup() {
           <S.Error>{formState.errors.passwordConfirm?.message}</S.Error>
         </S.InputWrapper>
         <S.CheckWrapper>
-          <S.Check type="checkbox" name="check" value="check" />
+          <S.Check
+            type="checkbox"
+            {...register("checkbox")}
+            onChange={onChangeChecked}
+          />
           <S.CheckContents>I agree with Privacy and Policy</S.CheckContents>
         </S.CheckWrapper>
+        <S.Error>{formState.errors.checkbox?.message}</S.Error>
         <S.RegisterButton>Sign up</S.RegisterButton>
-      </S.InnerWrapper>
+      </S.Form>
     </S.Wrapper>
   );
 }

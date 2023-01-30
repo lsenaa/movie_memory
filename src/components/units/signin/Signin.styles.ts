@@ -23,7 +23,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const InnerWrapper = styled.div`
+export const Form = styled.form`
   width: 600px;
   height: 800px;
   padding: 80px;
@@ -103,7 +103,7 @@ export const SignUp = styled.div`
   }
 `;
 
-export const InputWrapper = styled.form`
+export const InputWrapper = styled.div`
   width: 100%;
   height: 300px;
   display: flex;

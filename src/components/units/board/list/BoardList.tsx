@@ -26,10 +26,6 @@ export default function BoardList() {
     setKeyword(value);
   };
 
-  // const onClickSearch = (event: MouseEvent<HTMLButtonElement>) => {
-  //   void refetch({ search: event.currentTarget.value, page: 1 });
-  // };
-
   const { data: dataBoardsCount, refetch: refetchBoardsCount } = useQuery<
     Pick<IQuery, "fetchBoardsCount">,
     IQueryFetchBoardsCountArgs

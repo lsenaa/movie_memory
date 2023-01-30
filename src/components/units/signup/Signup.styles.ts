@@ -23,7 +23,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const InnerWrapper = styled.form`
+export const Form = styled.form`
   width: 600px;
   height: 800px;
   padding: 80px;
@@ -128,7 +128,7 @@ export const CheckWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 40px 0;
+  margin-top: 40px;
 `;
 
 export const Check = styled.input`
@@ -151,6 +151,7 @@ export const RegisterButton = styled.button`
   color: #f9d142;
   font-size: 24px;
   font-weight: bold;
+  margin-top: 40px;
   cursor: pointer;
 
   :hover {
@@ -160,6 +161,6 @@ export const RegisterButton = styled.button`
 `;
 
 export const Error = styled.div`
-  margin-left: 14px;
+  margin: 8px 0 8px 14px;
   color: #f9d142;
 `;
