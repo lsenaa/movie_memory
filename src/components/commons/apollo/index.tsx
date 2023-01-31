@@ -30,7 +30,6 @@ export default function ApolloSetting(props: IApolloSettingProps) {
   }, []);
 
   const errorLink = onError(({ graphQLErrors, operation, forward }) => {
-    // 1. 에러를 캐치
     if (typeof graphQLErrors !== "undefined") {
       for (const err of graphQLErrors) {
         if (err.extensions.code === "UNAUTHENTICATED") {
