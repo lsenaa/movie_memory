@@ -31,7 +31,11 @@ export const UseMutationUpdateBoard = () => {
     IMutationUpdateBoardArgs
   >(UPDATE_BOARD);
 
-  const updateBoardSubmit = async (data: IFormBoardData, boardId: string) => {
+  const updateBoardSubmit = async (
+    data: IFormBoardData,
+    boardId: string,
+    image: any
+  ) => {
     try {
       const result = await updateBoard({
         variables: {
@@ -39,7 +43,7 @@ export const UseMutationUpdateBoard = () => {
             title: data.title,
             contents: data.contents,
             youtubeUrl: data.youtubeUrl,
-            images: data.images,
+            images: image,
           },
           boardId,
           password: data.password,

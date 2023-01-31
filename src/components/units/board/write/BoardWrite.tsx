@@ -18,8 +18,6 @@ const ReactQuill = dynamic(async () => await import("react-quill"), {
 });
 
 export default function BoardWrite(props: IBoardWriteProps) {
-  // const [imageUrl, setImageUrl] = useState<string[]>([""]);
-  // const [files, setFiles] = useState<File[]>([]);
   const [imageUrl, setImageUrl] = useState("");
   const [files, setFiles] = useState<File>();
 
@@ -40,17 +38,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
         setFiles(file);
       }
     };
-    // fileReader.onload = (event) => {
-    //   if (typeof event.target?.result === "string") {
-    //     const tempUrls = [...imageUrl];
-    //     tempUrls[index] = event.target.result;
-    //     setImageUrl(tempUrls);
-
-    //     const tempFiles = [...files];
-    //     tempFiles[index] = file;
-    //     setFiles(tempFiles);
-    //   }
-    // };
   };
 
   useEffect(() => {
@@ -78,33 +65,20 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   const onSubmitForm = async (data: IFormBoardData) => {
-    // 이미지
-    // const results = await Promise.all(
-    //   files.map(async (el) =>
-    //     el !== undefined
-    //       ? await uploadFile({ variables: { file: el } })
-    //       : undefined
-    //   )
-    // );
-    // const resultUrls = results.map((el) =>
-    //   el !== undefined ? el.data?.uploadFile.url : ""
-    // );
-
     const result = await uploadFile({ variables: { file: files } });
-    const resultUrl = result.data?.uploadFile;
+    const resultUrl = result.data?.uploadFile.url;
     if (!resultUrl) return;
 
     const boardId = props.data?.fetchBoard._id;
 
     const writer = String(userData?.fetchUserLoggedIn.name);
     const { ...value } = data;
-    value.images = resultUrl;
     value.contents = getValues("contents");
 
     if (!props.isEdit) {
-      void createBoardSubmit(data, writer);
+      void createBoardSubmit(data, writer, resultUrl);
     } else {
-      void updateBoardSubmit(data, boardId);
+      void updateBoardSubmit(data, boardId, resultUrl);
     }
   };
 
@@ -114,16 +88,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
       <S.InnerWrapper>
         <S.LeftWrapper>
           <S.ImgBtnWrapper>
-            {imageUrl[0] ? (
-              <S.Image
-                src={imageUrl}
-
-                // <S.Image
-                //   src={
-                //     imageUrl[0] ||
-                //     `https://storage.googleapis.com/${props.data?.fetchBoard.images[0]}`
-                //   }
-              />
+            {imageUrl ? (
+              <S.Image src={imageUrl} />
             ) : (
               <S.UploadBtn type="button">
                 <FaPlus />

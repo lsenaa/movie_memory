@@ -38,7 +38,9 @@ export default function BoardDetail() {
   const onClickMoveToList = () => {
     void router.push(`/boards`);
   };
-  console.log(data?.fetchBoard);
+
+  if (typeof data?.fetchBoard.contents === "undefined") return;
+
   return (
     <S.PageWrapper>
       <S.InnerWrapper>
