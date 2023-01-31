@@ -1,50 +1,97 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Modal } from "antd";
-import { ChangeEvent, useState } from "react";
-import DaumPostcodeEmbed from "react-daum-postcode";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
 import { UseMutationCreateBoard } from "../../../commons/hooks/useMutations/UseMutationCreateBoard";
 import { UseMutationUpdateBoard } from "../../../commons/hooks/useMutations/UseMutationUpdateBoard";
 import { UseMutationUploadFile } from "../../../commons/hooks/useMutations/UseMutationUploadFile";
+import { checkValidationImage } from "../../../commons/uploads/01/Uploads01.validation";
 import * as S from "./BoardWrite.styles";
-import { IBoardWriteProps } from "./BoardWrite.types";
+import { IBoardWriteProps, IFormBoardData } from "./BoardWrite.types";
 import { schema } from "./BoardWrite.validation";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
+import { UseQueryFetchUserLoggedIn } from "../../../commons/hooks/useQueries/UseQueryFetchUserLoggedIn";
 
-interface IFormBoardData {
-  images: string;
-  title: string;
-  contents: string;
-}
+const ReactQuill = dynamic(async () => await import("react-quill"), {
+  ssr: false,
+});
 
 export default function BoardWrite(props: IBoardWriteProps) {
-  const [imageUrls, setImageUrls] = useState<string[]>([""]);
+  const [imageUrl, setImageUrl] = useState<string[]>([""]);
+  const [files, setFiles] = useState<File[]>([]);
 
+  const { data: userData } = UseQueryFetchUserLoggedIn();
   const [uploadFile] = UseMutationUploadFile();
   const { createBoardSubmit } = UseMutationCreateBoard();
   const { updateBoardSubmit } = UseMutationUpdateBoard();
 
   const onChangeFile =
     (index: number) => async (event: ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
+      const file = checkValidationImage(event.target.files?.[0]);
       if (file === undefined) return;
-      try {
-        const result = await uploadFile({ variables: { file } });
-        const tempUrls = [...imageUrls];
-        tempUrls[index] = result.data?.uploadFile ? result.data.uploadFile : "";
-        setImageUrls(tempUrls);
-      } catch (error) {
-        if (error instanceof Error) alert(error.message);
-      }
+
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = (event) => {
+        if (typeof event.target?.result === "string") {
+          const tempUrls = [...imageUrl];
+          tempUrls[index] = event.target.result;
+          setImageUrl(tempUrls);
+
+          const tempFiles = [...files];
+          tempFiles[index] = file;
+          setFiles(tempFiles);
+        }
+      };
     };
 
-  const { register, handleSubmit } = useForm({
+  useEffect(() => {
+    if (props.data?.fetchBoard.images?.length !== undefined) {
+      setImageUrl([...props.data?.fetchBoard.images]);
+    }
+  }, [props.data]);
+
+  const {
+    register,
+    formState,
+    handleSubmit,
+    setValue,
+    reset,
+    getValues,
+    trigger,
+  } = useForm({
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
 
-  const onSubmitForm = (data: IFormBoardData) => {
-    // const boardId = props.data.
+  const onChangeContents = (value: string) => {
+    setValue("contents", value === "<p><br></p>" ? "" : value);
+    void trigger("contents");
+  };
+
+  const onSubmitForm = async (data: IFormBoardData) => {
+    // 이미지
+    const results = await Promise.all(
+      files.map(async (el) =>
+        el !== undefined
+          ? await uploadFile({ variables: { file: el } })
+          : undefined
+      )
+    );
+    const resultUrls = results.map((el) =>
+      el !== undefined ? el.data?.uploadFile.url : ""
+    );
+
+    // const result = await uploadFile({ variables: { file: files } });
+    // const resultUrl =
+    //   result.data?.uploadFile !== undefined ? result.data.uploadFile.url : "";
+    const boardId = props.data?.fetchBoard._id;
+
+    const { ...value } = data;
+    value.images = resultUrls;
+    value.writer = getValues("writer");
+
     if (!props.isEdit) {
       void createBoardSubmit(data);
     } else {
@@ -53,121 +100,76 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   return (
-    <S.Wrapper>
+    <S.Form onSubmit={handleSubmit(onSubmitForm)}>
       <S.Title>{props.isEdit ? "Edit Post" : "Write Post"}</S.Title>
-      {/* <S.ImgWrapper> */}
-      <S.Form onSubmit={handleSubmit(onSubmitForm)}>
+      <S.InnerWrapper>
         <S.LeftWrapper>
-          {imageUrl ? (
-            <S.Image src={`https://storage.googleapis.com/${imageUrl}`} />
-          ) : (
-            <S.ImgBtn type="button" onClick={props.onClickImage}>
-              <FaPlus />
-              <S.TextUpload>Upload</S.TextUpload>
-            </S.ImgBtn>
-          )}
-          <S.ImageUploadInput
-            type="file"
-            onChange={onChangeFile}
-            ref={fileref}
-          />
-          {/* <S.ImgBtn onClick={props.onClickImage}>
-          <FaPlus />
-          <S.TextUpload>Upload</S.TextUpload>
-          <S.ImageUploadInput
-            type="file"
-            onChange={props.onChangeFile}
-            ref={props.fileref}
-          />
-          <S.Image src={`https://storage.googleapis.com/${props.imageUrl}`} />
-        </S.ImgBtn> */}
+          <S.ImgBtnWrapper>
+            {imageUrl[0] ? (
+              <S.Image
+                src={
+                  imageUrl[0] ||
+                  `https://storage.googleapis.com/${props.data?.fetchBoard.images[0]}`
+                }
+              />
+            ) : (
+              <S.UploadBtn type="button">
+                <FaPlus />
+                <S.TextUpload>Upload</S.TextUpload>
+              </S.UploadBtn>
+            )}
+            <S.ImageUploadInput type="file" onChange={onChangeFile(0)} />
+          </S.ImgBtnWrapper>
         </S.LeftWrapper>
-        {/* </S.ImgWrapper> */}
+
         <S.RightWrapper>
-          {/* <S.Title>{props.isEdit ? "게시물 수정" : "게시물 등록"}</S.Title> */}
-          <S.UserInfo>
-            <S.InputWrapper>
-              <S.WriterInput
-                type="text"
-                defaultValue={props.data?.fetchBoard.writer ?? ""}
-                placeholder="name"
-                readOnly={!!props.data?.fetchBoard.user?.name}
-              ></S.WriterInput>
-              {/* <S.Error>{writerError}</S.Error> */}
-            </S.InputWrapper>
-            <S.InputWrapper>
-              {/* <S.Label>비밀번호</S.Label> */}
-              <S.PasswordInput
-                type="password"
-                defaultValue={props.data?.fetchBoard.password}
-                placeholder="password"
-              ></S.PasswordInput>
-              {/* <S.Error>{passwordError}</S.Error> */}
-            </S.InputWrapper>
-          </S.UserInfo>
+          <S.UserInputWrap>
+            <S.UserInput
+              type="text"
+              value={userData?.fetchUserLoggedIn.name}
+              readOnly
+              {...register("writer")}
+            />
+            <S.UserInput
+              type="password"
+              placeholder="password"
+              {...register("password")}
+            />
+          </S.UserInputWrap>
           <S.InputWrapper>
-            {/* <S.Label>제목</S.Label> */}
             <S.Inputbox
               type="text"
+              {...register("title")}
               defaultValue={props.data?.fetchBoard.title}
               placeholder="title"
             />
-            <S.Error>{titleError}</S.Error>
+            <S.Error>{formState.errors.title?.message}</S.Error>
           </S.InputWrapper>
           <S.InputWrapper>
-            {/* <S.Label>내용</S.Label> */}
-            <S.ContentInputbox
-              type="text"
+            <ReactQuill
+              onChange={onChangeContents}
+              placeholder="Write someting..."
+              style={{
+                width: "100%",
+                height: "480px",
+                backgroundColor: "white",
+                borderRadius: "50px",
+              }}
+              className="quillStyle"
               defaultValue={props.data?.fetchBoard.contents}
-              placeholder="contents"
-            ></S.ContentInputbox>
-            <S.Error>{contentsError}</S.Error>
+            />
+            <S.Error>{formState.errors.contents?.message}</S.Error>
           </S.InputWrapper>
           <S.InputWrapper>
-            {/* <S.Label>주소</S.Label> */}
-            <S.ZipcodeWrapper>
-              <S.Zipcode
-                placeholder="07250"
-                readOnly
-                value={
-                  props.zipcode ||
-                  (props.data?.fetchBoard.boardAddress?.zipcode ?? "")
-                }
-              ></S.Zipcode>
-              <S.ZipcodeBtn type="button" onClick={onToggleModal}>
-                Postcode
-              </S.ZipcodeBtn>
-              {isModalOpen && (
-                <Modal
-                  open={true}
-                  onOk={onToggleModal}
-                  onCancel={onToggleModal}
-                >
-                  <DaumPostcodeEmbed onComplete={onChangeAddress} />
-                </Modal>
-              )}
-            </S.ZipcodeWrapper>
-            <S.Address
-              value={
-                address || (props.data?.fetchBoard.boardAddress?.address ?? "")
-              }
-            />
-            <S.Address
-              defaultValue={
-                props.data?.fetchBoard.boardAddress?.addressDetail ?? ""
-              }
-            />
-          </S.InputWrapper>
-          <S.InputWrapper>
-            {/* <S.Label>유튜브</S.Label> */}
             <S.Inputbox
               placeholder="youtube link"
+              {...register("youtubeUrl")}
               defaultValue={props.data?.fetchBoard.youtubeUrl ?? ""}
             ></S.Inputbox>
           </S.InputWrapper>
         </S.RightWrapper>
-      </S.Form>
+      </S.InnerWrapper>
       <S.PostBtn>{props.isEdit ? "Edit" : "Post"}</S.PostBtn>
-    </S.Wrapper>
+    </S.Form>
   );
 }

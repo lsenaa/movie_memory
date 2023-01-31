@@ -5,6 +5,7 @@ import {
   IMutation,
   IMutationUpdateBoardArgs,
 } from "../../../../commons/types/generated/types";
+import { IFormBoardData } from "../../../units/board/write/BoardWrite.types";
 
 export const UPDATE_BOARD = gql`
   mutation updateBoard($updateBoardInput: UpdateBoardInput!, $boardId: ID!) {
@@ -22,12 +23,15 @@ export const UseMutationUpdateBoard = () => {
     IMutationUpdateBoardArgs
   >(UPDATE_BOARD);
 
-  const updateBoardSubmit = async (data, boardId) => {
+  const updateBoardSubmit = async (data: IFormBoardData, boardId: string) => {
     try {
       const result = await updateBoard({
         variables: {
           updateBoardInput: {
-            ...data,
+            title: data.title,
+            contents: data.contents,
+            youtubeUrl: data.youtubeUrl,
+            images: data.images,
           },
           boardId,
         },

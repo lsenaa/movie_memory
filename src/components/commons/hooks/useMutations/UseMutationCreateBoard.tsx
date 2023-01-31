@@ -5,6 +5,7 @@ import {
   IMutation,
   IMutationCreateBoardArgs,
 } from "../../../../commons/types/generated/types";
+import { IFormBoardData } from "../../../units/board/write/BoardWrite.types";
 
 export const CREATE_BOARD = gql`
   mutation createBoard($createBoardInput: CreateBoardInput!) {
@@ -22,12 +23,17 @@ export const UseMutationCreateBoard = () => {
     IMutationCreateBoardArgs
   >(CREATE_BOARD);
 
-  const createBoardSubmit = async (data) => {
+  const createBoardSubmit = async (data: IFormBoardData) => {
     try {
       const result = await createBoard({
         variables: {
           createBoardInput: {
-            ...data,
+            title: data.title,
+            contents: data.title,
+            youtubeUrl: data.youtubeUrl,
+            images: data.images,
+            writer: data.writer,
+            password: data.password,
           },
         },
       });
