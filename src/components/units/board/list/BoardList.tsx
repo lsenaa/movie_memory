@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import Link from "next/link";
 import { UseQueryfetchBoards } from "../../../commons/hooks/useQueries/UseQueryFetchBoards";
 import { UseQueryfetchBoardsOfTheBest } from "../../../commons/hooks/useQueries/UseQueryFetchBoardsOfTheBest";
+import Dompurify from "dompurify";
 
 export default function BoardList() {
   const router = useRouter();
@@ -126,7 +127,14 @@ export default function BoardList() {
                       <S.TitleDateWrap>
                         <S.BoardTitle>{board.title}</S.BoardTitle>
                       </S.TitleDateWrap>
-                      <S.BoardContents>{board.contents}</S.BoardContents>
+                      {typeof window !== "undefined" && (
+                        <S.BoardContents
+                          dangerouslySetInnerHTML={{
+                            __html: Dompurify.sanitize(board.contents),
+                          }}
+                        ></S.BoardContents>
+                      )}
+                      {/* <S.BoardContents>{board.contents}</S.BoardContents> */}
                       <S.BottomWrapper>
                         <S.UserWrapper>
                           <S.UserImg src="" onError={onErrorUserImg} />
