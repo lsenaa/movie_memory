@@ -19,6 +19,8 @@ const FETCH_BOARD = gql`
         addressDetail
       }
       images
+      likeCount
+      dislikeCount
     }
   }
 `;

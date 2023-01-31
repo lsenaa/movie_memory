@@ -23,17 +23,17 @@ export const UseMutationCreateBoard = () => {
     IMutationCreateBoardArgs
   >(CREATE_BOARD);
 
-  const createBoardSubmit = async (data: IFormBoardData) => {
+  const createBoardSubmit = async (data: IFormBoardData, writer: string) => {
     try {
       const result = await createBoard({
         variables: {
           createBoardInput: {
             title: data.title,
-            contents: data.title,
+            contents: data.contents,
             youtubeUrl: data.youtubeUrl,
             images: data.images,
-            writer: data.writer,
             password: data.password,
+            writer,
           },
         },
       });

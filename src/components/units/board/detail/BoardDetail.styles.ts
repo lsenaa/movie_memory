@@ -12,7 +12,6 @@ export const PageWrapper = styled.div`
 
 export const InnerWrapper = styled.div`
   width: 100%;
-  height: 1500px;
   padding: 60px 40px;
   background: transparent;
   display: flex;
@@ -24,7 +23,6 @@ export const InnerWrapper = styled.div`
 
 export const TopWrapper = styled.div`
   width: 100%;
-  height: 1500px;
   display: flex;
   flex-direction: row;
   align-items: center;

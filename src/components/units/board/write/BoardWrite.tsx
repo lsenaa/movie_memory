@@ -12,6 +12,7 @@ import { schema } from "./BoardWrite.validation";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import { UseQueryFetchUserLoggedIn } from "../../../commons/hooks/useQueries/UseQueryFetchUserLoggedIn";
+import Link from "next/link";
 
 const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
@@ -88,12 +89,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
     //   result.data?.uploadFile !== undefined ? result.data.uploadFile.url : "";
     const boardId = props.data?.fetchBoard._id;
 
+    const writer = String(userData?.fetchUserLoggedIn.name);
     const { ...value } = data;
     value.images = resultUrls;
-    value.writer = getValues("writer");
+    value.contents = getValues("contents");
 
     if (!props.isEdit) {
-      void createBoardSubmit(data);
+      void createBoardSubmit(data, writer);
     } else {
       void updateBoardSubmit(data, boardId);
     }
@@ -115,7 +117,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
             ) : (
               <S.UploadBtn type="button">
                 <FaPlus />
-                <S.TextUpload>Upload</S.TextUpload>
+                <S.TextUpload>Upload Poster</S.TextUpload>
               </S.UploadBtn>
             )}
             <S.ImageUploadInput type="file" onChange={onChangeFile(0)} />
@@ -128,7 +130,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
               type="text"
               value={userData?.fetchUserLoggedIn.name}
               readOnly
-              {...register("writer")}
             />
             <S.UserInput
               type="password"
@@ -169,7 +170,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
           </S.InputWrapper>
         </S.RightWrapper>
       </S.InnerWrapper>
-      <S.PostBtn>{props.isEdit ? "Edit" : "Post"}</S.PostBtn>
+      <S.BtnWrapper>
+        <S.PostBtn>{props.isEdit ? "Edit" : "Post"}</S.PostBtn>
+        <Link href="/boards">
+          <S.PostBtn type="button">List</S.PostBtn>
+        </Link>
+      </S.BtnWrapper>
     </S.Form>
   );
 }

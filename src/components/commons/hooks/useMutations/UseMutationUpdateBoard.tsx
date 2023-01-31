@@ -8,8 +8,16 @@ import {
 import { IFormBoardData } from "../../../units/board/write/BoardWrite.types";
 
 export const UPDATE_BOARD = gql`
-  mutation updateBoard($updateBoardInput: UpdateBoardInput!, $boardId: ID!) {
-    updateBoard(updateBoardInput: $updateBoardInput, boardId: $boardId) {
+  mutation updateBoard(
+    $updateBoardInput: UpdateBoardInput!
+    $boardId: ID!
+    $password: String
+  ) {
+    updateBoard(
+      updateBoardInput: $updateBoardInput
+      boardId: $boardId
+      password: $password
+    ) {
       _id
     }
   }
@@ -34,6 +42,7 @@ export const UseMutationUpdateBoard = () => {
             images: data.images,
           },
           boardId,
+          password: data.password,
         },
       });
       Modal.success({ content: "게시물이 수정되었습니다." });

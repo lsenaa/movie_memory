@@ -106,14 +106,23 @@ export const Inputbox = styled.input`
   outline: none;
 `;
 
+export const BtnWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const PostBtn = styled.button`
   width: 179px;
-  height: 70px;
+  padding: 14px 20px;
   font-weight: bold;
   font-size: 24px;
   background-color: #f9d142;
   border: none;
   border-radius: 50px;
+  margin-right: 20px;
   cursor: pointer;
 `;
 
