@@ -51,8 +51,7 @@ export default function MyPage() {
         </Link>
       </S.UserWrapper>
       <S.MyMenuWrapper>
-        <S.MyMenu>My Market</S.MyMenu>
-        <S.MyMenu>My Point</S.MyMenu>
+        <S.MyMenu>My Post</S.MyMenu>
         <S.MyMenu>My Profile</S.MyMenu>
       </S.MyMenuWrapper>
     </S.Wrapper>

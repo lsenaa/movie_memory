@@ -39,7 +39,7 @@ export default function BoardDetail() {
     void router.push(`/boards`);
   };
 
-  if (typeof data?.fetchBoard.contents === "undefined") return;
+  // if (typeof data?.fetchBoard.contents === "undefined") return;
 
   return (
     <S.PageWrapper>

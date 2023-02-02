@@ -19,7 +19,6 @@ const ReactQuill = dynamic(async () => await import("react-quill"), {
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const [imageUrl, setImageUrl] = useState("");
-  const [files, setFiles] = useState<File>();
 
   const { data: userData } = UseQueryFetchUserLoggedIn();
   const [uploadFile] = UseMutationUploadFile();
@@ -30,45 +29,34 @@ export default function BoardWrite(props: IBoardWriteProps) {
     const file = event.target.files?.[0];
     if (file === undefined) return;
 
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = (event) => {
-      if (typeof event.target?.result === "string") {
-        setImageUrl(event.target.result);
-        setFiles(file);
-      }
-    };
+    try {
+      const result = await uploadFile({ variables: { file } });
+      const resultUrl = result.data?.uploadFile.url;
+      if (!resultUrl) return;
+      setImageUrl(resultUrl);
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
   };
 
   useEffect(() => {
-    if (props.data?.fetchBoard.images?.length !== undefined) {
-      setImageUrl(props.data?.fetchBoard.images);
+    if (props.data.fetchBoard.images) {
+      setImageUrl(props.data.fetchBoard.images[0]);
     }
   }, [props.data]);
 
-  const {
-    register,
-    formState,
-    handleSubmit,
-    setValue,
-    reset,
-    getValues,
-    trigger,
-  } = useForm({
-    resolver: yupResolver(schema),
-    mode: "onSubmit",
-  });
+  const { register, formState, handleSubmit, setValue, getValues, trigger } =
+    useForm<IFormBoardData>({
+      resolver: yupResolver(schema),
+      mode: "onSubmit",
+    });
 
   const onChangeContents = (value: string) => {
     setValue("contents", value === "<p><br></p>" ? "" : value);
     void trigger("contents");
   };
 
-  const onSubmitForm = async (data: IFormBoardData) => {
-    const result = await uploadFile({ variables: { file: files } });
-    const resultUrl = result.data?.uploadFile.url;
-    if (!resultUrl) return;
-
+  const onSubmitForm = (data: IFormBoardData) => {
     const boardId = props.data?.fetchBoard._id;
 
     const writer = String(userData?.fetchUserLoggedIn.name);
@@ -76,9 +64,9 @@ export default function BoardWrite(props: IBoardWriteProps) {
     value.contents = getValues("contents");
 
     if (!props.isEdit) {
-      void createBoardSubmit(data, writer, resultUrl);
+      void createBoardSubmit(data, writer, imageUrl);
     } else {
-      void updateBoardSubmit(data, boardId, resultUrl);
+      void updateBoardSubmit(data, boardId, imageUrl);
     }
   };
 
@@ -88,8 +76,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
       <S.InnerWrapper>
         <S.LeftWrapper>
           <S.ImgBtnWrapper>
-            {imageUrl ? (
-              <S.Image src={imageUrl} />
+            {imageUrl || props.data?.fetchBoard.images ? (
+              <S.Image
+                src={
+                  `https://storage.googleapis.com/${imageUrl}` ||
+                  props.data?.fetchBoard.images[0]
+                }
+              />
             ) : (
               <S.UploadBtn type="button">
                 <FaPlus />
