@@ -42,11 +42,6 @@ export const UserEmail = styled.div`
   margin: 10px 0;
 `;
 
-export const UserPoint = styled.div`
-  color: white;
-  font-size: 24px;
-`;
-
 export const MyMenuWrapper = styled.div`
   width: 100%;
   padding: 20px 0;
