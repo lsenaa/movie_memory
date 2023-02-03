@@ -1,19 +1,10 @@
 import * as S from "./styles";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Modal } from "antd";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { IQuery } from "../../../../commons/types/generated/types";
+import { Modal } from "antd";
+import { gql, useMutation } from "@apollo/client";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-
-const FETCH_USER_LOGGED_IN = gql`
-  query fetchUserLoggedIn {
-    fetchUserLoggedIn {
-      name
-    }
-  }
-`;
+import { UseQueryFetchUserLoggedIn } from "../../hooks/useQueries/UseQueryFetchUserLoggedIn";
 
 const LOGOUT_USER = gql`
   mutation logoutUser {
@@ -25,9 +16,7 @@ export default function LayoutHeader() {
   const router = useRouter();
   const [isLogout, setIsLogout] = useState(false);
 
-  const { data } =
-    useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
-
+  const { data } = UseQueryFetchUserLoggedIn();
   const [logoutUser] = useMutation(LOGOUT_USER);
 
   const onClickLogout = async () => {
@@ -54,9 +43,6 @@ export default function LayoutHeader() {
           <Link href="/boards">
             <S.NavMenu>Board</S.NavMenu>
           </Link>
-          <Link href="/useditems">
-            <S.NavMenu>Market</S.NavMenu>
-          </Link>
           <Link href="/mypage">
             <S.NavMenu>My page</S.NavMenu>
           </Link>
@@ -80,12 +66,6 @@ export default function LayoutHeader() {
               <S.Login onClick={onClickLogout}>Logout</S.Login>
             </>
           )}
-
-          {/* <Avatar
-            style={{ backgroundColor: "#b6afb7", cursor: "pointer" }}
-            size="large"
-            icon={<UserOutlined />}
-          /> */}
         </S.SignupWrapper>
       </S.InnerWrapper>
     </S.Wrapper>
