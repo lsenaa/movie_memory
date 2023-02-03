@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { FETCH_BOARD } from "../../../units/board/detail/BoardDetail.queries";
+import { FETCH_BOARD } from "../useQueries/UseQueryFetchBoard";
 
 const DISLIKE_BOARD = gql`
   mutation dislikeBoard($boardId: ID!) {

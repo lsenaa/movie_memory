@@ -5,7 +5,7 @@ import {
   IMutation,
   IMutationDeleteBoardArgs,
 } from "../../../../commons/types/generated/types";
-import { FETCH_BOARD } from "../../../units/board/detail/BoardDetail.queries";
+import { FETCH_BOARD } from "../useQueries/UseQueryFetchBoard";
 
 const DELETE_BOARD = gql`
   mutation deleteBoard($boardId: ID!) {
