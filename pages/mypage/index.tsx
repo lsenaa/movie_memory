@@ -1,5 +1,6 @@
 import { useAuth } from "../../src/components/commons/hooks/useAuth";
 import { UseQueryFetchUserLoggedIn } from "../../src/components/commons/hooks/useQueries/UseQueryFetchUserLoggedIn";
+import MypageMypost from "../../src/components/units/mypage/mypost/Mypost";
 import * as S from "./styles";
 
 export default function MyPage() {
@@ -26,6 +27,7 @@ export default function MyPage() {
         <S.MyMenu>My Post</S.MyMenu>
         <S.MyMenu>My Profile</S.MyMenu>
       </S.MyMenuWrapper>
+      <MypageMypost />
     </S.Wrapper>
   );
 }
