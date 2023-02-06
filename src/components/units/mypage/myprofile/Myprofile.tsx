@@ -1,4 +1,4 @@
-import * as S from "./Myprofile.Styles";
+import * as S from "./Myprofile.styles";
 import { UseQueryFetchUserLoggedIn } from "../../../commons/hooks/useQueries/UseQueryFetchUserLoggedIn";
 import { ChangeEvent, useEffect, useState } from "react";
 import { UseMutationUploadFile } from "../../../commons/hooks/useMutations/UseMutationUploadFile";

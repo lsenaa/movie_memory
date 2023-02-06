@@ -84,6 +84,7 @@ export const Rating = styled.div`
 export const DetailBtn = styled.button`
   width: 90px;
   height: 50px;
+  border: none;
   border-radius: 50px;
   background-color: #f9d142;
   color: black;

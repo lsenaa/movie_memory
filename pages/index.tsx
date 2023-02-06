@@ -10,30 +10,30 @@ const Wrapper = styled.div`
 `;
 
 export default function Home() {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const onToggleModal = () => {
-  //   setIsModalOpen((prev) => !prev);
-  // };
+  const onToggleModal = () => {
+    setIsModalOpen((prev) => !prev);
+  };
 
-  // const onClickModal = (event: MouseEvent<HTMLDivElement>) => {
-  //   onToggleModal();
-  //   // console.log(event.currentTarget);
-  // };
+  const onClickModal = (event: MouseEvent<HTMLDivElement>) => {
+    onToggleModal();
+    // console.log(event.currentTarget);
+  };
 
   return (
     <Wrapper>
       <RestGetBoxoffice
-      // isModalOpen={isModalOpen}
-      // setIsModalOpen={setIsModalOpen}
-      // onToggleModal={onToggleModal}
-      // onClickModal={onClickModal}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        onToggleModal={onToggleModal}
+        onClickModal={onClickModal}
       />
       <PopularMovie
-      // isModalOpen={isModalOpen}
-      // setIsModalOpen={setIsModalOpen}
-      // onToggleModal={onToggleModal}
-      // onClickModal={onClickModal}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        onToggleModal={onToggleModal}
+        onClickModal={onClickModal}
       />
     </Wrapper>
   );
