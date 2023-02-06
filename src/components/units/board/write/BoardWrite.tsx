@@ -40,8 +40,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   useEffect(() => {
-    if (props.data.fetchBoard.images) {
-      setImageUrl(props.data.fetchBoard.images[0]);
+    if (props.data?.fetchBoard.images) {
+      setImageUrl(props.data?.fetchBoard.images[0]);
     }
   }, [props.data]);
 

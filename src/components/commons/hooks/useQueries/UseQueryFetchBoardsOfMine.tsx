@@ -9,9 +9,6 @@ const FETCH_BOARDS_OF_MINE = gql`
       contents
       createdAt
       updatedAt
-      likeCount
-      dislikeCount
-      images
     }
   }
 `;

@@ -1,6 +1,7 @@
 import { useAuth } from "../../src/components/commons/hooks/useAuth";
 import { UseQueryFetchUserLoggedIn } from "../../src/components/commons/hooks/useQueries/UseQueryFetchUserLoggedIn";
 import MypageMypost from "../../src/components/units/mypage/mypost/Mypost";
+import MypageMyprofile from "../../src/components/units/mypage/myprofile/Myprofile";
 import * as S from "./styles";
 
 export default function MyPage() {
@@ -15,7 +16,7 @@ export default function MyPage() {
         <S.UserPicture
           src={
             data?.fetchUserLoggedIn.picture
-              ? data?.fetchUserLoggedIn.picture
+              ? `https://storage.googleapis.com/${data?.fetchUserLoggedIn.picture}`
               : "/profile.png"
           }
           alt="사용자 프로필이미지"
@@ -28,6 +29,7 @@ export default function MyPage() {
         <S.MyMenu>My Profile</S.MyMenu>
       </S.MyMenuWrapper>
       <MypageMypost />
+      <MypageMyprofile />
     </S.Wrapper>
   );
 }

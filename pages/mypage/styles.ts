@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
   width: 1200px;
-  height: 1200px;
   box-shadow: 0px 0px 10px grey;
   padding: 40px;
   display: flex;
@@ -28,6 +27,7 @@ export const UserPicture = styled.img`
   width: 80px;
   height: 80px;
   margin-bottom: 10px;
+  border-radius: 50%;
 `;
 
 export const UserName = styled.div`
