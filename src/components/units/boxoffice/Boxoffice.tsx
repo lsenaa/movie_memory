@@ -1,6 +1,6 @@
 import * as S from "./Boxoffice.styles";
 import axios from "axios";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MovieModal from "../../commons/moviemodal/Moviemodal";
 
 interface IData {
@@ -15,7 +15,6 @@ interface IData {
 export default function RestGetBoxoffice() {
   const [data, setData] = useState<IData[]>([]);
   const [modalItemVal, setModalItemVal] = useState({});
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {

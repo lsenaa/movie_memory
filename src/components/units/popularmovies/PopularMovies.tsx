@@ -27,6 +27,8 @@ interface IData {
 
 export default function RestGetPopularMovie(props: IPopularMovieProps) {
   const [data, setData] = useState<IData[]>([]);
+  const [modalItemVal, setModalItemVal] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const getPopularMovie = async () => {
@@ -43,19 +45,34 @@ export default function RestGetPopularMovie(props: IPopularMovieProps) {
     void getPopularMovie();
   }, []);
 
+  const onToggleModal = () => {
+    setIsModalOpen((prev) => !prev);
+  };
+
+  const onClickModal = (modalID: string) => () => {
+    onToggleModal();
+
+    const modalItem = data.filter((cur) => {
+      if (cur.id === modalID) {
+        return cur;
+      } else {
+        return undefined;
+      }
+    });
+    setModalItemVal(modalItem[0]);
+  };
+
   return (
     <S.Wrapper>
+      <MovieModal
+        isModalOpen={isModalOpen}
+        onToggleModal={onToggleModal}
+        modalItemVal={modalItemVal}
+      />
       <S.Label>Popular Movies</S.Label>
       <S.InnerWrapper>
         {data?.slice(0, 8).map((el) => (
           <S.ListWrapper key={el.id}>
-            {props.isModalOpen && (
-              <MovieModal
-                isModalOpen={props.isModalOpen}
-                title={el.title}
-                originalTitle={el.original_title}
-              />
-            )}
             <S.ImgWrapper>
               <S.PosterImg
                 src={`https://image.tmdb.org/t/p/original/${el.poster_path}`}
@@ -66,7 +83,7 @@ export default function RestGetPopularMovie(props: IPopularMovieProps) {
               <S.OriginalTitle>{el.original_title}</S.OriginalTitle>
               <S.ReleaseDate>개봉일 {el.release_date}</S.ReleaseDate>
               <S.Rating>평점 {el.vote_average}</S.Rating>
-              <S.DetailBtn onClick={props.onClickModal}>Detail</S.DetailBtn>
+              <S.DetailBtn onClick={onClickModal(el.id)}>Detail</S.DetailBtn>
             </S.ContentWrapper>
           </S.ListWrapper>
         ))}
