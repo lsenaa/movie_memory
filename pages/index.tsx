@@ -1,6 +1,6 @@
-import RestGetBoxoffice from "../src/components/units/boxoffice/Boxoffice";
-import PopularMovie from "./popularmovies";
 import styled from "@emotion/styled";
+import RestGetBoxoffice from "../src/components/units/boxoffice/Boxoffice";
+import RestGetPopularMovie from "../src/components/units/popularmovies/PopularMovies";
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <Wrapper>
       <RestGetBoxoffice />
-      <PopularMovie />
+      <RestGetPopularMovie />
     </Wrapper>
   );
 }

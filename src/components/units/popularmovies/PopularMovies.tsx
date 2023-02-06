@@ -1,20 +1,7 @@
 import * as S from "./PopularMovies.styles";
 import axios from "axios";
-import {
-  Dispatch,
-  MouseEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import MovieModal from "../../commons/moviemodal/Moviemodal";
-
-interface IPopularMovieProps {
-  isModalOpen: boolean;
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  onToggleModal: () => void;
-  onClickModal: (event: MouseEvent<HTMLDivElement>) => void;
-}
 
 interface IData {
   id: string;
@@ -25,7 +12,7 @@ interface IData {
   vote_average: number;
 }
 
-export default function RestGetPopularMovie(props: IPopularMovieProps) {
+export default function RestGetPopularMovie() {
   const [data, setData] = useState<IData[]>([]);
   const [modalItemVal, setModalItemVal] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
