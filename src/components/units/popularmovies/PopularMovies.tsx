@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import MovieModal from "../../commons/moviemodal/Moviemodal.container";
+import MovieModal from "../../commons/moviemodal/Moviemodal";
 
 interface IPopularMovieProps {
   isModalOpen: boolean;
