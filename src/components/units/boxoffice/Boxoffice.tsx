@@ -2,15 +2,7 @@ import * as S from "./Boxoffice.styles";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import MovieModal from "../../commons/moviemodal/Moviemodal";
-
-interface IData {
-  id: string;
-  title: string;
-  original_title: string;
-  poster_path: string;
-  release_date: string;
-  vote_average: number;
-}
+import { IData } from "../../commons/layout";
 
 export default function RestGetBoxoffice() {
   const [data, setData] = useState<IData[]>([]);

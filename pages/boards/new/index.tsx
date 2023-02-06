@@ -1,7 +1,8 @@
-import { withAuth } from "../../../src/components/commons/hocs/withAuth";
+import { useAuth } from "../../../src/components/commons/hooks/useAuth";
 import BoardWrite from "../../../src/components/units/board/write/BoardWrite";
 
 export default function BoardWritePage() {
-  withAuth();
+  useAuth();
+
   return <BoardWrite isEdit={false} />;
 }

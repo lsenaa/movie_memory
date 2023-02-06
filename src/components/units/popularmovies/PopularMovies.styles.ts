@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
   width: 1200px;
-  /* padding: 80px 40px 40px 40px; */
   margin: 80px 0 0 40px;
   display: flex;
   flex-wrap: wrap;
@@ -30,9 +29,7 @@ export const Label = styled.div`
 export const ListWrapper = styled.div`
   width: 24%;
   height: 400px;
-  /* margin-bottom: 40px; */
   margin: 0 10px 40px 0;
-  /* margin-right: 10px; */
 `;
 
 export const ImgWrapper = styled.div`
