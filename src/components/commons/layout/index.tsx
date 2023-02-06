@@ -1,16 +1,26 @@
 import LayoutHeader from "./header";
 import LayoutBanner from "./banner";
 import { useRouter } from "next/router";
-import React, { useState, ChangeEvent, KeyboardEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import styled from "@emotion/styled";
 import axios from "axios";
 import LayoutFooter from "./footer";
+import { Modal } from "antd";
 
 const HIDDEN_BANNER = ["/signup", "/signin"];
 const HIDDEN_FOOTER = ["/signup", "/signin"];
 
 interface ILayoutProps {
   children: JSX.Element;
+}
+
+export interface IData {
+  id: string;
+  title: string;
+  original_title: string;
+  poster_path: string;
+  release_date: string;
+  vote_average: number;
 }
 
 const BodyWrapper = styled.div`
@@ -28,7 +38,7 @@ export default function Layout(props: ILayoutProps) {
   const isHiddenFooter = HIDDEN_FOOTER.includes(router.asPath);
 
   // ============= 영화 검색 API ===========
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<IData[]>([]);
   const [query, setQuery] = useState("");
 
   const getMovieSearch = async () => {
@@ -52,37 +62,19 @@ export default function Layout(props: ILayoutProps) {
   const onSubmitSearch = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       if (!query) {
-        alert("검색어를 입력해주세요!");
+        Modal.error({ content: "검색어를 입력해주세요!" });
         return;
       }
 
       if (data) {
         setData([]);
-        getMovieSearch();
+        void getMovieSearch();
       } else {
-        getMovieSearch();
+        void getMovieSearch();
       }
       void router.push("/moviesearch");
     }
   };
-
-  // =========== 영화 상세 API ==============
-  const [detailData, setDetailData] = useState("");
-
-  useEffect(() => {
-    const getMovieDetail = async () => {
-      const key = "16dc064b627ca6cde712149438120122";
-      const movieId = 436270;
-
-      const detailResult = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movieId}?api_key=${key}&language=ko-KR`
-      );
-
-      // setDetailData((prev) => [...prev, ...detailResult.data.results]);
-      setDetailData(detailResult.data);
-    };
-    void getMovieDetail();
-  }, []);
 
   return (
     <>
@@ -93,10 +85,7 @@ export default function Layout(props: ILayoutProps) {
           onSubmitSearch={onSubmitSearch}
         />
       )}
-      <BodyWrapper>
-        {/* {props.children} */}
-        {React.cloneElement(props.children, { data })}
-      </BodyWrapper>
+      <BodyWrapper>{React.cloneElement(props.children, { data })}</BodyWrapper>
       {!isHiddenFooter && <LayoutFooter />}
     </>
   );
