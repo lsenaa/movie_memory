@@ -1,14 +1,19 @@
 import * as S from "./CommentList.styles";
 import { ICommentListUIItemProps } from "./CommentList.types";
-import BoardCommentWrite from "../write/CommentWrite.container";
-import { useState } from "react";
+// import BoardCommentWrite from "../write/CommentWrite.container";
+// import { useState } from "react";
 import { getDate } from "../../../../../commons/libraries/utils";
 import { Rate } from "antd";
+import { useRecoilState } from "recoil";
+import { isEditState } from "../../../../../commons/stores";
+import BoardCommentWrite from "../write/CommentWrite";
+import React from "react";
 
 export default function CommentListUIItem(props: ICommentListUIItemProps) {
-  const [isEdit, setIsEdit] = useState(false);
+  // const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useRecoilState(isEditState);
 
-  const onClickEdit = () => {
+  const onClickEdit = (event: React.MouseEvent) => {
     setIsEdit(true);
   };
 
@@ -27,13 +32,8 @@ export default function CommentListUIItem(props: ICommentListUIItemProps) {
                   <Rate disabled value={props.el?.rating} />
                 </S.CommentRating>
                 <S.CommentEdit>
-                  <S.CommentEditBtn>
-                    <img
-                      src="/comment_modify.png"
-                      alt="comment_modify"
-                      onClick={onClickEdit}
-                      id={props.el._id}
-                    />
+                  <S.CommentEditBtn id={props.el._id} onClick={onClickEdit}>
+                    <img src="/comment_modify.png" alt="comment_modify" />
                   </S.CommentEditBtn>
                   <S.CommentEditBtn>
                     <img
@@ -53,9 +53,9 @@ export default function CommentListUIItem(props: ICommentListUIItemProps) {
       )}
       {isEdit && (
         <BoardCommentWrite
-          onClickEdit={onClickEdit}
-          isEdit={isEdit}
-          setIsEdit={setIsEdit}
+          // onClickEdit={onClickEdit}
+          // isEdit={isEdit}
+          // setIsEdit={setIsEdit}
           el={props.el}
         />
       )}

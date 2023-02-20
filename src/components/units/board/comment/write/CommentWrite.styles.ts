@@ -24,7 +24,7 @@ export const CommentLabel = styled.div`
   color: white;
 `;
 
-export const CommentSubmit = styled.div``;
+export const CommentForm = styled.form``;
 
 export const CommentWriterInfo = styled.div`
   display: flex;
@@ -75,9 +75,18 @@ export const CommentBtn = styled.button`
   height: 52px;
   padding: 14px 16px;
   font-weight: bold;
-  background: ${(props) => (props.isEdit ? "#f9d142" : "#f9d142")};
-  color: ${(props) => (props.isEdit ? "black" : "black")};
+  background-color: #f9d142;
   border: none;
+  cursor: pointer;
+`;
+
+export const CommentCancelBtn = styled.button`
+  width: 91px;
+  height: 52px;
+  padding: 14px 16px;
+  font-weight: bold;
+  border: none;
+  background-color: white;
   cursor: pointer;
 `;
 

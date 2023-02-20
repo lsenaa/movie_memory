@@ -80,12 +80,12 @@ export default function BoardCommentList() {
   };
 
   return (
-    <div>
+    <>
       <CommentListUI
         data={data}
         onClickDelete={onClickDelete}
         onLoadMore={onLoadMore}
       />
-    </div>
+    </>
   );
 }

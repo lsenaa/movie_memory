@@ -125,10 +125,6 @@ export const SigninInput = styled.input`
     color: white;
   }
 
-  /* :-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.3) inset;
-  } */
-
   :-webkit-autofill,
   :-webkit-autofill:hover,
   :-webkit-autofill:focus,
@@ -136,23 +132,6 @@ export const SigninInput = styled.input`
     transition: background-color 5000s ease-in-out 0s;
     caret-color: white;
   }
-`;
-
-export const CheckWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 40px 0;
-`;
-
-export const Check = styled.input`
-  zoom: 1.5;
-  margin-right: 15px;
-`;
-
-export const CheckContents = styled.div`
-  font-size: 16px;
-  color: white;
 `;
 
 export const RegisterButton = styled.button`

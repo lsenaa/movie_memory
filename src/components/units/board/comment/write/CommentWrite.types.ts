@@ -1,11 +1,11 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { IBoardComment } from "../../../../../commons/types/generated/types";
 
 export interface IBoardCommentWriteProps {
-  writer: string;
-  password: string;
-  contents: string;
-  el: string;
-  isEdit: boolean;
+  el: IBoardComment;
+  // isEdit: boolean;
+  // onClickEdit: () => void;
+  // setIsEdit: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface ICommentWriteUIProps {
@@ -16,4 +16,11 @@ export interface ICommentWriteUIProps {
   onClickUpdate: () => void;
   isEdit: boolean;
   contents: string;
+}
+
+export interface IFormBoardCommentData {
+  writer?: string;
+  password?: string;
+  contents: string;
+  rating: number;
 }

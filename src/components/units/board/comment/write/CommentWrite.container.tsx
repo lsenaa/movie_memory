@@ -1,3 +1,4 @@
+import * as S from "./CommentWrite.styles";
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
@@ -9,8 +10,11 @@ import {
   FETCH_BOARD_COMMENTS,
 } from "./CommentWrite.queries";
 import { IBoardCommentWriteProps } from "./CommentWrite.types";
+import { Rate } from "antd";
 
-export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
+export default function BoardCommentWriteContainer(
+  props: IBoardCommentWriteProps
+) {
   const router = useRouter();
 
   const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
@@ -104,17 +108,19 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
   };
 
   return (
-    <CommentWriteUI
-      onChangeWriter={onChangeWriter}
-      onChangePassword={onChangePassword}
-      onChangeContents={onChangeContents}
-      onClickWrite={onClickWrite}
-      onClickUpdate={onClickUpdate}
-      contents={contents}
-      onChangeRating={onChangeRating}
-      isEdit={props.isEdit}
-      writer={writer}
-      el={props.el}
-    />
+    <>
+      <CommentWriteUI
+        onChangeWriter={onChangeWriter}
+        onChangePassword={onChangePassword}
+        onChangeContents={onChangeContents}
+        onClickWrite={onClickWrite}
+        onClickUpdate={onClickUpdate}
+        contents={contents}
+        onChangeRating={onChangeRating}
+        isEdit={props.isEdit}
+        writer={writer}
+        el={props.el}
+      />
+    </>
   );
 }

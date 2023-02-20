@@ -1,11 +1,15 @@
 import { MouseEvent } from "react";
+import {
+  IBoardComment,
+  IQuery,
+} from "../../../../../commons/types/generated/types";
 
 export interface ICommentListUIProps {
-  data?: any;
+  data: Pick<IQuery, "fetchBoardComments"> | undefined;
 }
 
 export interface ICommentListUIItemProps {
-  el: any;
+  el: IBoardComment;
   onClickDelete: (event: MouseEvent<HTMLDivElement>) => void;
   onClickUpdate: (event: MouseEvent<HTMLDivElement>) => void;
 }
