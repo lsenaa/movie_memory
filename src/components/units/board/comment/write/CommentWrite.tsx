@@ -9,12 +9,9 @@ import { useForm } from "react-hook-form";
 import { UseMutationUpdateBoardComment } from "../../../../commons/hooks/useMutations/UseMutationUpdateBoardComment";
 import { UseQueryFetchUserLoggedIn } from "../../../../commons/hooks/useQueries/UseQueryFetchUserLoggedIn";
 import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
-import { isEditState } from "../../../../../commons/stores";
 
 export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
   const router = useRouter();
-  const [isEdit, setIsEdit] = useRecoilState(isEditState);
 
   const { data: userData } = UseQueryFetchUserLoggedIn();
   const { createBoardCommentSubmit } = UseMutationCreateBoardComment();
@@ -35,17 +32,14 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
     const writer = String(userData?.fetchUserLoggedIn.name);
     const boardCommentId = props.el?._id;
 
-    if (!isEdit) {
+    if (!props.isEdit) {
       void createBoardCommentSubmit(writer, data, boardId);
       setValue("password", "");
       setValue("contents", "");
     } else {
       void updateBoardCommentSubmit(data, boardCommentId);
+      props.setIsUpdateId("");
     }
-  };
-
-  const onClickEdit = () => {
-    setIsEdit(false);
   };
 
   return (
@@ -88,13 +82,16 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
               /100
             </S.CommentContentNumber>
             <div>
-              {isEdit && (
-                <S.CommentCancelBtn type="button" onClick={onClickEdit}>
+              {props.isEdit && (
+                <S.CommentCancelBtn
+                  type="button"
+                  onClick={props.onClickEditComment("")}
+                >
                   Cancel
                 </S.CommentCancelBtn>
               )}
               <S.CommentBtn type="submit" id={props.el?._id}>
-                {isEdit ? "Edit" : "Post"}
+                {props.isEdit ? "Edit" : "Post"}
               </S.CommentBtn>
             </div>
           </S.CommentContentInfo>
