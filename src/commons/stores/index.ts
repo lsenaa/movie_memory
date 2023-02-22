@@ -6,6 +6,11 @@ export const accessTokenState = atom({
   default: "",
 });
 
+export const isEditState = atom({
+  key: "isEditState",
+  default: false,
+});
+
 export const restoreAccessTokenLoadable = selector({
   key: "restoreAccessTokenLoadable",
   get: async () => {
