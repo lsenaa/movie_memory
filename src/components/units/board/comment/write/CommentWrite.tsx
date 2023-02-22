@@ -30,7 +30,7 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
   const onSubmitForm = (data: IFormBoardCommentData) => {
     const boardId = String(router.query.boardId);
     const writer = String(userData?.fetchUserLoggedIn.name);
-    const boardCommentId = props.el?._id;
+    const boardCommentId = String(props.el?._id);
 
     if (!props.isEdit) {
       void createBoardCommentSubmit(writer, data, boardId);
@@ -38,7 +38,8 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
       setValue("contents", "");
     } else {
       void updateBoardCommentSubmit(data, boardCommentId);
-      props.setIsUpdateId("");
+      if (props.setIsEditId === undefined) return;
+      props.setIsEditId("");
     }
   };
 
@@ -85,7 +86,11 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
               {props.isEdit && (
                 <S.CommentCancelBtn
                   type="button"
-                  onClick={props.onClickEditComment("")}
+                  onClick={
+                    props.onClickEditComment
+                      ? props.onClickEditComment("")
+                      : undefined
+                  }
                 >
                   Cancel
                 </S.CommentCancelBtn>

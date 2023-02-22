@@ -4,10 +4,10 @@ import BoardCommentWrite from "../../../src/components/units/board/comment/write
 
 export default function BoardDetailPage() {
   return (
-    <>
+    <div>
       <BoardDetail />
-      <BoardCommentWrite />
+      <BoardCommentWrite isEdit={false} />
       <BoardCommentList />
-    </>
+    </div>
   );
 }

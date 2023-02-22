@@ -11,7 +11,7 @@ import { getDate } from "../../../../../commons/libraries/utils";
 export default function BoardCommentList() {
   const router = useRouter();
 
-  const [isUpdateId, setIsUpdateId] = useState("");
+  const [isEditId, setIsEditId] = useState("");
   const { data, fetchMore } = UseQueryfetchBoardComments({
     boardId: String(router.query.boardId),
   });
@@ -49,7 +49,7 @@ export default function BoardCommentList() {
 
   const onClickEditComment =
     (updateId: string) => (event: React.MouseEvent) => {
-      setIsUpdateId(updateId);
+      setIsEditId(updateId);
     };
 
   return (
@@ -58,7 +58,7 @@ export default function BoardCommentList() {
         {data?.fetchBoardComments ? (
           data?.fetchBoardComments.map((el) => (
             <S.CommentWrapper key={el._id}>
-              {isUpdateId !== el._id ? (
+              {isEditId !== el._id ? (
                 <S.Comment>
                   <div>
                     <S.ProfileImg src="/profile.png" alt="profile" />
@@ -96,7 +96,7 @@ export default function BoardCommentList() {
                   el={el}
                   isEdit={true}
                   onClickEditComment={onClickEditComment}
-                  setIsUpdateId={setIsUpdateId}
+                  setIsEditId={setIsEditId}
                 />
               )}
             </S.CommentWrapper>
