@@ -39,8 +39,6 @@ export default function BoardDetail() {
     void router.push(`/boards`);
   };
 
-  // if (typeof data?.fetchBoard.contents === "undefined") return;
-
   return (
     <S.PageWrapper>
       <S.InnerWrapper>
@@ -68,12 +66,16 @@ export default function BoardDetail() {
               </S.ImageWrapper>
               <S.ContentInnerWrapper>
                 <S.ContentTitle>{data?.fetchBoard.title}</S.ContentTitle>
-                {typeof window !== "undefined" && (
+                {typeof window !== "undefined" ? (
                   <S.ContentText
                     dangerouslySetInnerHTML={{
-                      __html: Dompurify.sanitize(data?.fetchBoard.contents),
+                      __html: Dompurify.sanitize(
+                        String(data?.fetchBoard.contents)
+                      ),
                     }}
                   ></S.ContentText>
+                ) : (
+                  <S.ContentText></S.ContentText>
                 )}
               </S.ContentInnerWrapper>
             </S.ContentWrapper>
