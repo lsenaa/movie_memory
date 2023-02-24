@@ -43,9 +43,6 @@ export const UseMutationDeleteBoardComment = () => {
       });
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
-      Modal.error({
-        content: "댓글 삭제에 실패하였습니다. 다시 시도해주세요.",
-      });
     }
   };
 
