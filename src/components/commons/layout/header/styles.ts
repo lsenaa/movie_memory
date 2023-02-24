@@ -22,12 +22,8 @@ export const Logo = styled.div`
 `;
 
 export const NavWrapper = styled.ul`
-  width: 800px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
   margin-bottom: 0;
+  margin-left: 110px;
 `;
 
 export const NavMenu = styled.a`
@@ -58,9 +54,6 @@ export const SignupWrapper = styled.div`
 `;
 
 export const Signup = styled.a`
-  width: 100px;
-  border: none;
-  padding: 10px 0;
   margin-right: 20px;
   font-weight: bold;
   font-size: 24px;
@@ -73,10 +66,6 @@ export const Signup = styled.a`
 `;
 
 export const Login = styled.a`
-  width: 100px;
-  border: none;
-  padding: 10px 0;
-  margin-right: 20px;
   font-weight: bold;
   font-size: 24px;
   color: white;
