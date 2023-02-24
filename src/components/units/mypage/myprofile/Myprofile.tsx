@@ -65,7 +65,7 @@ export default function MypageMyprofile() {
                 src={`https://storage.googleapis.com/${imageUrl}`}
               />
             ) : (
-              <S.ProfileImg src={"/profile.png"} />
+              <S.ProfileImg src={"/images/profile.png"} />
             )}
             <S.ImageUploadInput type="file" onChange={onChangeFile} />
           </S.ImgBtnWrapper>

@@ -47,7 +47,7 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
     <>
       <S.CommentWrapper>
         <S.CommentTitle>
-          <S.CommentImg src="/comment.png" alt="comment" />
+          <S.CommentImg src="/images/comment.png" alt="comment" />
           <S.CommentLabel>Comment</S.CommentLabel>
         </S.CommentTitle>
         <S.CommentForm onSubmit={handleSubmit(onSubmitForm)}>

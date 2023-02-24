@@ -26,7 +26,7 @@ export default function MyPage() {
           src={
             data?.fetchUserLoggedIn.picture
               ? `https://storage.googleapis.com/${data?.fetchUserLoggedIn.picture}`
-              : "/profile.png"
+              : "/images/profile.png"
           }
           alt="사용자 프로필이미지"
         />

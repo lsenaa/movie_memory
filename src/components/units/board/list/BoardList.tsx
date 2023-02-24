@@ -69,15 +69,15 @@ export default function BoardList() {
   };
 
   const onErrorImg = (event: any) => {
-    event.target.src = "/BestOnErrorImg.jpg";
+    event.target.src = "/images/BestOnErrorImg.jpg";
   };
 
   const onErrorBoardImg = (event: any) => {
-    event.target.src = "/boardOnErrorImg.jpg";
+    event.target.src = "/images/boardOnErrorImg.jpg";
   };
 
   const onErrorUserImg = (event: any) => {
-    event.target.src = "/profile.png";
+    event.target.src = "/images/profile.png";
   };
 
   return (

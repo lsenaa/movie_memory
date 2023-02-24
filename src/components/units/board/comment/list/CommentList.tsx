@@ -61,7 +61,7 @@ export default function BoardCommentList() {
               {isEditId !== el._id ? (
                 <S.Comment>
                   <div>
-                    <S.ProfileImg src="/profile.png" alt="profile" />
+                    <S.ProfileImg src="/images/profile.png" alt="profile" />
                   </div>
                   <S.CommentDetail>
                     <S.FirstLine>
@@ -71,11 +71,14 @@ export default function BoardCommentList() {
                       </S.CommentRating>
                       <S.CommentEdit>
                         <S.CommentEditBtn onClick={onClickEditComment(el._id)}>
-                          <img src="/comment_modify.png" alt="comment_modify" />
+                          <img
+                            src="/images/comment_modify.png"
+                            alt="comment_modify"
+                          />
                         </S.CommentEditBtn>
                         <S.CommentEditBtn>
                           <img
-                            src="/cancel.png"
+                            src="/images/cancel.png"
                             alt="comment_cancel"
                             onClick={onClickDelete}
                             id={el._id}

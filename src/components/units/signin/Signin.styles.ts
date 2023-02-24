@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   width: 1920px;
   height: 1000px;
-  background-image: url("/signupImg.jpg");
+  background-image: url("/images/signupImg.jpg");
   background-size: cover;
   background-position: center;
   display: flex;

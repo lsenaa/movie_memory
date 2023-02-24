@@ -17,7 +17,7 @@ export const InnerWrapper = styled.div`
       rgba(20, 20, 20, 0.5) 75%,
       rgba(20, 20, 20, 1) 100%
     ),
-    url("/banner8.jpg");
+    url("/images/banner.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

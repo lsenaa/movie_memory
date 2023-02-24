@@ -46,7 +46,7 @@ export default function BoardDetail() {
           <S.ContentsWrapper>
             <S.WriterWrapper>
               <S.LeftWrapper>
-                <S.ProfileImg src="/profile.png" alt="profile_img" />
+                <S.ProfileImg src="/images/profile.png" alt="profile_img" />
                 <S.DateWrapper>
                   <S.Writer>{data?.fetchBoard.writer}</S.Writer>
                   <S.Date>{getDate(data?.fetchBoard.createdAt)}</S.Date>
