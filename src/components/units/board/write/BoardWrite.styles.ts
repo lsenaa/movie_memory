@@ -73,6 +73,18 @@ export const Title = styled.div`
   font-size: 34px;
   font-weight: 700;
   color: white;
+  position: relative;
+  padding: 0.2em 0;
+
+  ::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1em;
+    background-color: #f9d142;
+  }
 `;
 
 export const InputWrapper = styled.div`
