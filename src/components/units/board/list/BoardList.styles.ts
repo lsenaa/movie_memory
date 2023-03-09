@@ -113,7 +113,6 @@ export const BoardWrapper = styled.div`
 
 export const BoardList = styled.div`
   width: 30%;
-  height: 500px;
   margin-bottom: 30px;
   cursor: pointer;
   display: flex;
@@ -130,7 +129,7 @@ export const BoardImg = styled.img`
 
 export const ContentsWrapper = styled.div`
   width: 100%;
-  height: 220px;
+  height: 180px;
   padding: 20px 20px;
   display: flex;
   flex-direction: column;
@@ -167,6 +166,7 @@ export const BottomWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const UserWrapper = styled.div`

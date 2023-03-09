@@ -84,20 +84,24 @@ export default function BoardList() {
     <S.Wrapper>
       <S.BestTitle>Best Posts</S.BestTitle>
       <S.BestWrapper>
-        {bestData?.map((best: any) => (
+        {bestData?.map((best) => (
           <S.BestLiWrapper
             key={best._id}
             id={best._id}
             onClick={onClickMoveToBest}
           >
             <S.BestImg
-              src={`https://storage.googleapis.com/${best.images}`}
+              src={
+                best.images?.length
+                  ? `https://storage.googleapis.com/${best.images[0]}`
+                  : "/images/BestOnErrorImg.jpg"
+              }
               onError={onErrorImg}
             />
             <S.BestContentsWrapper>
               <S.BestContentsWriter>
                 <S.BestContentsLabel>Writer</S.BestContentsLabel>
-                {best.user?.name}
+                {best.writer}
               </S.BestContentsWriter>
               <S.BestContentsTitle>
                 <S.BestContentsLabel>Title</S.BestContentsLabel>
@@ -120,7 +124,11 @@ export default function BoardList() {
                 <Link href={`boards/${board._id}`} key={index}>
                   <S.BoardList>
                     <S.BoardImg
-                      src={`https://storage.googleapis.com/${board.images}`}
+                      src={
+                        board.images?.length
+                          ? `https://storage.googleapis.com/${board.images[0]}`
+                          : "/images/boardOnErrorImg.jpg"
+                      }
                       onError={onErrorBoardImg}
                     />
                     <S.ContentsWrapper>
@@ -130,15 +138,16 @@ export default function BoardList() {
                       {typeof window !== "undefined" && (
                         <S.BoardContents
                           dangerouslySetInnerHTML={{
-                            __html: Dompurify.sanitize(board.contents),
+                            __html: Dompurify.sanitize(
+                              board.contents.slice(0, 10) + "..."
+                            ),
                           }}
                         ></S.BoardContents>
                       )}
-                      {/* <S.BoardContents>{board.contents}</S.BoardContents> */}
                       <S.BottomWrapper>
                         <S.UserWrapper>
                           <S.UserImg src="" onError={onErrorUserImg} />
-                          <S.UserName>{board.user?.name}</S.UserName>
+                          <S.UserName>{board.writer}</S.UserName>
                         </S.UserWrapper>
                         <S.BoardDate>{getDate(board.createdAt)}</S.BoardDate>
                       </S.BottomWrapper>

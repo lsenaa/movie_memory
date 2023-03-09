@@ -8,16 +8,11 @@ export const FETCH_BOARDS = gql`
   query fetchBoards($page: Int, $search: String) {
     fetchBoards(page: $page, search: $search) {
       _id
+      writer
       title
       contents
+      images
       createdAt
-      youtubeUrl
-      boardAddress {
-        _id
-        zipcode
-        address
-        addressDetail
-      }
       user {
         name
         picture
