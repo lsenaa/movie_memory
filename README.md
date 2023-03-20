@@ -10,6 +10,12 @@
 
 </br>
 
+## 영화 검색 페이지
+![search](https://user-images.githubusercontent.com/114736992/226272105-db09c7a4-6d46-429d-afa8-a8cb291b5ff4.gif)
+
+
+</br>
+
 ## 회원가입 페이지
 ![signup-min](https://user-images.githubusercontent.com/114736992/225246765-8cb4057f-79ff-4198-a09c-2ca40cafbff2.gif)
 
