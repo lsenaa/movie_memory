@@ -35,38 +35,38 @@ export default function LayoutHeader() {
     <S.Wrapper>
       <S.InnerWrapper>
         <Link href="/">
-          <a>
-            <S.Logo>MM</S.Logo>
-          </a>
+          <S.Logo>MM</S.Logo>
         </Link>
-        <S.NavWrapper>
-          <Link href="/boards">
-            <S.NavMenu>Board</S.NavMenu>
-          </Link>
-          <Link href="/mypage">
-            <S.NavMenu>My page</S.NavMenu>
-          </Link>
-        </S.NavWrapper>
-        <S.SignupWrapper>
+        {/* <S.Nav> */}
+        <ul>
+          <li>
+            <Link href="/boards">Board</Link>
+          </li>
+          <li>
+            <Link href="/mypage">My page</Link>
+          </li>
+        </ul>
+        {/* </S.Nav> */}
+        <ul>
           {isLogout || data === undefined ? (
             <>
-              <Link href="/signup">
-                <S.Signup>Sign up</S.Signup>
-              </Link>
-              <Link href="/signin">
-                <S.Login>Sign in</S.Login>
-              </Link>
+              <li>
+                <Link href="/signup">Sign up</Link>
+              </li>
+              <li>
+                <Link href="/signin">Sign in</Link>
+              </li>
             </>
           ) : (
             <>
-              <S.UserName>
+              <li>
                 {data?.fetchUserLoggedIn.name}
                 {data?.fetchUserLoggedIn.name ? "님" : ""}
-              </S.UserName>
-              <S.Login onClick={onClickLogout}>Logout</S.Login>
+              </li>
+              <li onClick={onClickLogout}>Logout</li>
             </>
           )}
-        </S.SignupWrapper>
+        </ul>
       </S.InnerWrapper>
     </S.Wrapper>
   );
