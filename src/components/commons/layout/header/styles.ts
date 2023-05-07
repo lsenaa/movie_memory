@@ -22,13 +22,16 @@ export const InnerWrapper = styled.nav`
   ul {
     display: flex;
     align-items: center;
-    /* margin-bottom: 0; */
+    margin-bottom: 0;
+
+    :first-child {
+      margin-left: 150px;
+    }
 
     li {
       :first-child {
         margin-right: 30px;
       }
-      /* list-style: none; */
       color: white;
       cursor: pointer;
       font-size: 24px;

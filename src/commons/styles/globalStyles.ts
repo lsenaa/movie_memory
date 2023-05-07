@@ -14,6 +14,10 @@ export const globalStyles = css`
     text-decoration: none;
   }
 
+  li {
+    list-style: none;
+  }
+
   @font-face {
     font-family: "NotoSansKR";
     src: url("/fonts/NotoSansKR-Regular.ttf");
