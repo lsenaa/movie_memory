@@ -36,9 +36,9 @@ export default function Signup() {
       <S.Form onSubmit={handleSubmit(onSubmitForm)}>
         <S.TitleWrapper>
           <Link href="/signin">
-            <S.SignIn>Sign In</S.SignIn>
+            <li>Sign In</li>
           </Link>
-          <S.SignUp>Sign Up</S.SignUp>
+          <li>Sign Up</li>
         </S.TitleWrapper>
         <S.InputWrapper>
           <S.SignupInput

@@ -20,13 +20,13 @@ export const InnerWrapper = styled.nav`
   justify-content: space-between;
 
   ul {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0;
-
     :first-child {
       margin-left: 150px;
     }
+
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
 
     li {
       :first-child {

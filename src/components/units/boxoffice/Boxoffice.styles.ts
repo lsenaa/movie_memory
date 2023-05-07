@@ -13,26 +13,27 @@ export const Wrapper = styled.div`
   align-content: center;
 `;
 
-export const InnerWrapper = styled.div`
+export const Label = styled.h2`
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  color: whitesmoke;
+  margin-bottom: 0;
+`;
+
+export const ListWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-top: 40px;
-`;
 
-export const Label = styled.div`
-  font-size: 36px;
-  font-weight: bold;
-  text-align: center;
-  color: whitesmoke;
-`;
-
-export const ListWrapper = styled.div`
-  width: 30%;
-  height: 400px;
-  margin-bottom: 40px;
+  li {
+    width: 30%;
+    height: 400px;
+    margin-bottom: 40px;
+  }
 `;
 
 export const ImgWrapper = styled.div`
@@ -63,23 +64,17 @@ export const ContentWrapper = styled.div`
   :hover {
     opacity: 1;
   }
-`;
 
-export const Title = styled.div`
-  font-size: 22px;
-`;
+  h3 {
+    color: white;
+    font-size: 22px;
+    margin-bottom: 0;
+  }
 
-export const OriginalTitle = styled.div`
-  font-size: 16px;
-`;
-
-export const ReleaseDate = styled.div`
-  font-size: 16px;
-  margin: 10px 0;
-`;
-
-export const Rating = styled.div`
-  font-size: 16px;
+  p {
+    font-size: 16px;
+    margin-bottom: 0;
+  }
 `;
 
 export const DetailBtn = styled.button`

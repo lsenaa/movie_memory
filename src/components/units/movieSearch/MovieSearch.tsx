@@ -41,9 +41,9 @@ export default function MovieSearch(props: IMovieSearchProps) {
         modalItemVal={modalItemVal}
       />
       <S.Label>Search Results</S.Label>
-      <S.InnerWrapper>
+      <S.ListWrapper>
         {props?.data?.map((el) => (
-          <S.ListWrapper key={el.id}>
+          <li key={el.id}>
             <S.ImgWrapper>
               <S.PosterImg
                 src={`https://image.tmdb.org/t/p/original/${el.poster_path}`}
@@ -51,15 +51,15 @@ export default function MovieSearch(props: IMovieSearchProps) {
               />
             </S.ImgWrapper>
             <S.ContentWrapper>
-              <S.Title>{el.title}</S.Title>
-              <S.OriginalTitle>{el.original_title}</S.OriginalTitle>
-              <S.ReleaseDate>개봉일 {el.release_date}</S.ReleaseDate>
-              <S.Rating>평점 {el.vote_average}</S.Rating>
+              <h3>{el.title}</h3>
+              <p>{el.original_title}</p>
+              <p>개봉일 {el.release_date}</p>
+              <p>평점 {el.vote_average}</p>
               <S.DetailBtn onClick={onClickModal(el.id)}>Detail</S.DetailBtn>
             </S.ContentWrapper>
-          </S.ListWrapper>
+          </li>
         ))}
-      </S.InnerWrapper>
+      </S.ListWrapper>
     </S.Wrapper>
   );
 }

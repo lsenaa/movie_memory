@@ -4,7 +4,6 @@ import { getDate } from "../../../../commons/libraries/utils";
 
 export default function MypageMypost() {
   const { data } = UseQueryFetchBoardsOfMine();
-  console.log(data);
 
   return (
     <S.Wrapper>

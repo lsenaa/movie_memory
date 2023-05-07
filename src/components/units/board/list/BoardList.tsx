@@ -64,7 +64,7 @@ export default function BoardList() {
     });
   };
 
-  const onClickMoveToBest = (event: MouseEvent<HTMLDivElement>) => {
+  const onClickMoveToBest = (event: MouseEvent<HTMLLiElement>) => {
     void router.push(`/boards/${event.currentTarget.id}`);
   };
 
@@ -85,11 +85,7 @@ export default function BoardList() {
       <S.BestTitle>Best Posts</S.BestTitle>
       <S.BestWrapper>
         {bestData?.map((best) => (
-          <S.BestLiWrapper
-            key={best._id}
-            id={best._id}
-            onClick={onClickMoveToBest}
-          >
+          <li key={best._id} id={best._id} onClick={onClickMoveToBest}>
             <S.BestImg
               src={
                 best.images?.length
@@ -112,7 +108,7 @@ export default function BoardList() {
                 {best.likeCount}
               </S.BestCount>
             </S.BestContentsWrapper>
-          </S.BestLiWrapper>
+          </li>
         ))}
       </S.BestWrapper>
       <S.Title>Board</S.Title>

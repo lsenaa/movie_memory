@@ -8,26 +8,27 @@ export const Wrapper = styled.div`
   padding: 80px 0;
 `;
 
-export const BestTitle = styled.div`
+export const BestTitle = styled.h2`
   font-size: 36px;
   font-weight: 700;
   color: white;
+  margin-bottom: 0;
 `;
 
-export const BestWrapper = styled.div`
+export const BestWrapper = styled.ul`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin: 40px 0;
   background-color: #151414;
-`;
 
-export const BestLiWrapper = styled.div`
-  width: 28%;
-  height: 400px;
-  background: #f6f4f5;
-  cursor: pointer;
+  li {
+    width: 28%;
+    height: 400px;
+    background: #f6f4f5;
+    cursor: pointer;
+  }
 `;
 
 export const BestImg = styled.img`

@@ -32,8 +32,8 @@ export default function Signin() {
     <S.Wrapper>
       <S.Form onSubmit={handleSubmit(onClickLogin)}>
         <S.TitleWrapper>
-          <S.SignIn>Sign In</S.SignIn>
-          <S.SignUp onClick={onClickMoveToSignup}>Sign Up</S.SignUp>
+          <li>Sign In</li>
+          <li onClick={onClickMoveToSignup}>Sign Up</li>
         </S.TitleWrapper>
         <S.InputWrapper>
           <S.SigninInput

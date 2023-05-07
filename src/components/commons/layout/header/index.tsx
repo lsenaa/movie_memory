@@ -37,7 +37,6 @@ export default function LayoutHeader() {
         <Link href="/">
           <S.Logo>MM</S.Logo>
         </Link>
-        {/* <S.Nav> */}
         <ul>
           <li>
             <Link href="/boards">Board</Link>
@@ -46,7 +45,6 @@ export default function LayoutHeader() {
             <Link href="/mypage">My page</Link>
           </li>
         </ul>
-        {/* </S.Nav> */}
         <ul>
           {isLogout || data === undefined ? (
             <>

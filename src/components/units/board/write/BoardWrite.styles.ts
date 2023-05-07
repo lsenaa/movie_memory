@@ -11,6 +11,25 @@ export const Form = styled.form`
   background-color: transparent;
 `;
 
+export const Title = styled.h2`
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+  position: relative;
+  padding: 0.2em 0;
+  margin-bottom: 0;
+
+  ::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1em;
+    background-color: #f9d142;
+  }
+`;
+
 export const InnerWrapper = styled.div`
   width: 100%;
   margin: 40px 0;
@@ -47,8 +66,9 @@ export const UploadBtn = styled.button`
   top: 0;
 `;
 
-export const TextUpload = styled.div`
+export const TextUpload = styled.p`
   margin-top: 5px;
+  margin-bottom: 0;
 `;
 
 export const ImageUploadInput = styled.input`
@@ -67,24 +87,6 @@ export const RightWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-export const Title = styled.div`
-  font-size: 34px;
-  font-weight: 700;
-  color: white;
-  position: relative;
-  padding: 0.2em 0;
-
-  ::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 0.1em;
-    background-color: #f9d142;
-  }
 `;
 
 export const InputWrapper = styled.div`

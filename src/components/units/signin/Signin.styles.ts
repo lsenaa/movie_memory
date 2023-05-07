@@ -34,72 +34,42 @@ export const Form = styled.form`
   z-index: 9;
 `;
 
-export const TitleWrapper = styled.div`
+export const TitleWrapper = styled.ul`
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-bottom: 40px;
-`;
 
-export const SignIn = styled.div`
-  font-size: 32px;
-  font-weight: bold;
-  color: white;
-  margin-right: 20px;
-  cursor: pointer;
-  position: relative;
-  padding: 0.2em 0;
-  overflow: hidden;
+  li {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    margin-right: 20px;
+    cursor: pointer;
+    position: relative;
+    padding: 0.2em 0;
+    overflow: hidden;
 
-  ::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 0.1em;
-    background-color: #f9d142;
-    opacity: 0;
-    transition: opacity 300ms, transform 300ms;
-    opacity: 1;
-    transform: translate3d(-100%, 0, 0);
-  }
+    ::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0.1em;
+      background-color: #f9d142;
+      opacity: 0;
+      transition: opacity 300ms, transform 300ms;
+      opacity: 1;
+      transform: translate3d(-100%, 0, 0);
+    }
 
-  :hover::after,
-  :focus::after {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-`;
-
-export const SignUp = styled.div`
-  font-size: 32px;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-  position: relative;
-  padding: 0.2em 0;
-  overflow: hidden;
-
-  ::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 0.1em;
-    background-color: #f9d142;
-    opacity: 0;
-    transition: opacity 300ms, transform 300ms;
-    opacity: 1;
-    transform: translate3d(-100%, 0, 0);
-  }
-
-  :hover::after,
-  :focus::after {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+    :hover::after,
+    :focus::after {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
   }
 `;
 
@@ -153,7 +123,7 @@ export const RegisterButton = styled.button`
   }
 `;
 
-export const Error = styled.div`
+export const Error = styled.p`
   color: #f9d142;
   margin-left: 14px;
   margin-bottom: 40px;
