@@ -64,7 +64,7 @@ export default function BoardList() {
     });
   };
 
-  const onClickMoveToBest = (event: MouseEvent<HTMLLiElement>) => {
+  const onClickMoveToBest = (event: MouseEvent<HTMLLIElement>) => {
     void router.push(`/boards/${event.currentTarget.id}`);
   };
 
