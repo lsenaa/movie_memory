@@ -37,18 +37,14 @@ export default function Layout(props: ILayoutProps) {
   const isHiddenBanner = HIDDEN_BANNER.includes(router.asPath);
   const isHiddenFooter = HIDDEN_FOOTER.includes(router.asPath);
 
-  // ============= 영화 검색 API ===========
   const [data, setData] = useState<IData[]>([]);
   const [query, setQuery] = useState("");
 
   const getMovieSearch = async () => {
-    const key = "16dc064b627ca6cde712149438120122";
+    const key = process.env.NEXT_PUBLIC_API_KEY;
 
     const result = await axios.get(
-      "https://api.themoviedb.org/3/search/movie?api_key=" +
-        key +
-        "&language=ko-KR&page=1&query=" +
-        query
+      `https://api.themoviedb.org/3/search/movie?api_key=${key}&language=ko-KR&page=1&query=${query}`
     );
 
     setData((prev) => [...prev, ...result.data.results]);
@@ -58,7 +54,6 @@ export default function Layout(props: ILayoutProps) {
     setQuery(event.currentTarget.value);
   };
 
-  // Enter키 누르면 검색하기
   const onSubmitSearch = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       if (!query) {

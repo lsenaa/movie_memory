@@ -11,12 +11,10 @@ export default function RestGetBoxoffice() {
 
   useEffect(() => {
     const getBoxoffice = async () => {
-      const key = "16dc064b627ca6cde712149438120122";
+      const key = process.env.NEXT_PUBLIC_API_KEY;
 
       const result = await axios.get(
-        "https://api.themoviedb.org/3/movie/now_playing?api_key=" +
-          key +
-          "&language=ko-KR&page=1"
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=ko-KR&page=1`
       );
 
       setData((prev) => [...prev, ...result.data.results]);
